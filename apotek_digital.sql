@@ -71,3 +71,31 @@ CREATE TABLE detail_transaksi (
     FOREIGN KEY (id_obat) REFERENCES obat(id_obat)
 );
 
+-- 4. Isilah masing-masing tabel dengan 6 baris data memanfaatkan perintah DML SQL
+
+-- Menyisipkan data pelanggan
+INSERT INTO pelanggan (nama, alamat, no_telepon, tanggal_lahir, tanggal_daftar) VALUES
+('Budi Santoso', 'Jl. Merdeka No. 1, Jakarta', '081234567890', '1990-05-15', '2023-01-10'),
+('Siti Aminah', 'Jl. Sudirman No. 2, Bandung', '081298765432', '1985-08-20', '2023-02-15'),
+('Andi Wijaya', 'Jl. Thamrin No. 3, Surabaya', '085612345678', '1992-11-10', '2023-03-20'),
+('Dewi Lestari', 'Jl. Gatot Subroto No. 4, Medan', '081345678901', '1988-04-25', '2023-04-05'),
+('Rudi Hermawan', 'Jl. Diponegoro No. 5, Semarang', '081987654321', '1995-12-30', '2023-05-12'),
+('Rina Marlina', 'Jl. Pahlawan No. 6, Yogyakarta', '087812349876', '1998-02-14', '2023-06-18');
+
+-- Menyisipkan data apoteker
+INSERT INTO apoteker (nama, no_sipa, no_telepon, shift) VALUES
+('Apt. Cahaya, S.Farm', 'SIPA-001/2020', '081122334455', 'Pagi'),
+('Apt. Surya, S.Farm', 'SIPA-002/2021', '082233445566', 'Siang'),
+('Apt. Bintang, S.Farm', 'SIPA-003/2019', '083344556677', 'Malam'),
+('Apt. Bulan, S.Farm', 'SIPA-004/2022', '084455667788', 'Pagi'),
+('Apt. Mega, S.Farm', 'SIPA-005/2018', '085566778899', 'Siang'),
+('Apt. Awan, S.Farm', 'SIPA-006/2023', '086677889900', 'Malam');
+
+-- Menyisipkan data kategori_obat
+INSERT INTO kategori_obat (nama_kategori, deskripsi, golongan) VALUES
+('Antibiotik', 'Obat untuk mengatasi infeksi bakteri', 'Keras'),
+('Analgesik', 'Obat pereda nyeri', 'Bebas Terbatas'),
+('Vitamin', 'Suplemen penambah daya tahan tubuh', 'Bebas'),
+('Antihistamin', 'Obat untuk meredakan alergi', 'Bebas Terbatas'),
+('Antiseptik', 'Cairan pembersih luka luaran', 'Bebas'),
+('Obat Batuk', 'Obat untuk meredakan batuk berdahak', 'Bebas');

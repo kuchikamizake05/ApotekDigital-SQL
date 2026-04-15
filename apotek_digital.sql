@@ -99,3 +99,31 @@ INSERT INTO kategori_obat (nama_kategori, deskripsi, golongan) VALUES
 ('Antihistamin', 'Obat untuk meredakan alergi', 'Bebas Terbatas'),
 ('Antiseptik', 'Cairan pembersih luka luaran', 'Bebas'),
 ('Obat Batuk', 'Obat untuk meredakan batuk berdahak', 'Bebas');
+
+-- Menyisipkan data obat
+INSERT INTO obat (id_kategori, nama_obat, merek, harga_satuan, stok, satuan, tanggal_kadaluarsa) VALUES
+(1, 'Amoxicillin 500mg', 'Amoxsan', 5000.00, 100, 'strip', '2025-10-12'),
+(2, 'Paracetamol 500mg', 'Panadol', 2000.00, 200, 'strip', '2026-01-15'),
+(3, 'Vitamin C 1000mg', 'Enervon-C', 3000.00, 150, 'botol', '2024-12-20'),
+(4, 'Cetirizine 10mg', 'Incidal', 4000.00, 80, 'strip', '2025-05-30'),
+(5, 'Povidone Iodine', 'Betadine', 15000.00, 50, 'botol', '2027-08-10'),
+(6, 'Sirup Obat Batuk', 'Woods', 18000.00, 60, 'botol', '2025-03-22');
+
+-- Menyisipkan data transaksi
+INSERT INTO transaksi (id_pelanggan, id_apoteker, tanggal_transaksi, total_harga, metode_pembayaran) VALUES
+(1, 1, '2023-11-01 08:30:00', 10000.00, 'Tunai'),
+(2, 2, '2023-11-02 14:15:00', 6000.00, 'QRIS'),
+(3, 3, '2023-11-03 20:45:00', 15000.00, 'Transfer'),
+(4, 4, '2023-11-04 09:00:00', 20000.00, 'Tunai'),
+(5, 5, '2023-11-05 13:20:00', 15000.00, 'QRIS'),
+(6, 6, '2023-11-06 21:10:00', 36000.00, 'Transfer');
+
+-- Menyisipkan data detail_transaksi
+INSERT INTO detail_transaksi (id_transaksi, id_obat, jumlah, harga_satuan, subtotal) VALUES
+(1, 1, 2, 5000.00, 10000.00),
+(2, 2, 3, 2000.00, 6000.00),
+(3, 3, 5, 3000.00, 15000.00),
+(4, 4, 5, 4000.00, 20000.00),
+(5, 5, 1, 15000.00, 15000.00),
+(6, 6, 2, 18000.00, 36000.00);
+

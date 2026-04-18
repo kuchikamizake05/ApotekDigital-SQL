@@ -127,3 +127,47 @@ INSERT INTO detail_transaksi (id_transaksi, id_obat, jumlah, harga_satuan, subto
 (5, 5, 1, 15000.00, 15000.00),
 (6, 6, 2, 18000.00, 36000.00);
 
+
+-- 5. Hapuslah dengan memanfaatkan perintah DML SQL satu baris data pada tiap tabel dengan perintah penghapusan yang beda-beda. Misal penghapusan tabel pertama tanpa pengkondisian, tabel selanjutnya penghapusan dengan berbagai macam pengkondisian yang beda-beda.
+
+-- Menghapus data detail_transaksi tanpa kondisi spesifik (dibatasi limit 1 baris)
+DELETE FROM detail_transaksi ORDER BY id_detail DESC LIMIT 1;
+
+-- Menghapus baris transaksi dengan kondisi ID
+DELETE FROM transaksi WHERE id_transaksi = 6;
+
+-- Menghapus baris obat menggunakan subquery
+DELETE FROM obat WHERE id_obat = (SELECT * FROM (SELECT MAX(id_obat) FROM obat) AS subq);
+
+-- Menghapus baris kategori_obat dengan operator perbandingan
+DELETE FROM kategori_obat WHERE id_kategori >= 6 ORDER BY id_kategori ASC LIMIT 1;
+
+-- Menghapus data apoteker dengan pencocokan string
+DELETE FROM apoteker WHERE no_sipa = 'SIPA-006/2023';
+
+-- Menghapus data pelanggan dengan kondisi logika AND
+DELETE FROM pelanggan WHERE nama = 'Rina Marlina' AND no_telepon = '087812349876';
+
+
+-- 6. Ubahlah memanfaatkan perintah DML SQL satu baris data pada masing-masing tabel. Misal pengubahan baris tabel pertama tanpa pengkondisian, tabel selanjutnya pengubahan dengan berbagai macam pengkondisian yang beda-beda.
+
+-- Mengubah baris pada detail_transaksi tanpa kondisi khusus
+UPDATE detail_transaksi 
+SET harga_satuan = harga_satuan + 500, subtotal = jumlah * (harga_satuan + 500) 
+ORDER BY id_detail ASC LIMIT 1;
+
+-- Mengubah transaksi dengan kondisi berdasarkan ID
+UPDATE transaksi SET total_harga = 11000.00 WHERE id_transaksi = 1;
+
+-- Mengubah baris obat dengan kondisi string LIKE
+UPDATE obat SET stok = stok + 15 WHERE nama_obat LIKE '%Amoxicillin%';
+
+-- Mengubah kategori_obat dengan operator perbandingan
+UPDATE kategori_obat SET deskripsi = 'Obat anti bakteri wajib dengan resep dokter' WHERE id_kategori <= 1 LIMIT 1;
+
+-- Mengubah data apoteker menggunakan logika AND
+UPDATE apoteker SET shift = 'Siang' WHERE id_apoteker = 1 AND nama = 'Apt. Cahaya, S.Farm';
+
+-- Mengubah data pelanggan menggunakan subquery
+UPDATE pelanggan SET alamat = 'Jl. Perjuangan Baru No. 1, Jakarta' WHERE id_pelanggan = (SELECT * FROM (SELECT MIN(id_pelanggan) FROM pelanggan) AS tmp);
+

@@ -171,3 +171,37 @@ UPDATE apoteker SET shift = 'Siang' WHERE id_apoteker = 1 AND nama = 'Apt. Cahay
 -- Mengubah data pelanggan menggunakan subquery
 UPDATE pelanggan SET alamat = 'Jl. Perjuangan Baru No. 1, Jakarta' WHERE id_pelanggan = (SELECT * FROM (SELECT MIN(id_pelanggan) FROM pelanggan) AS tmp);
 
+
+-- 7. Lakukan query memanfaatkan perintah DQL SQL yang melibatkan 1 tabel yang berbeda-beda dengan Query biasa, query dengan distict, query dengan sorting, query dengan memanfaatkan pengkondisian menggunakan berbagai operator, query dengan memanfaatkan grouping, query dengan memanfaatkan grouping dan having, serta berbagai macam query dengan memanfaatkan aggregat function dan grouping serta having
+
+-- Menampilkan data obat (Query biasa)
+SELECT nama_obat, merek, harga_satuan FROM obat;
+
+-- Menampilkan variasi shift apoteker (Query dengan distinct)
+SELECT DISTINCT shift FROM apoteker;
+
+-- Menampilkan data pelanggan berurutan (Query dengan sorting)
+SELECT * FROM pelanggan ORDER BY tanggal_daftar DESC;
+
+-- Menggunakan berbagai variasi operator perbandingan dan kondisi
+SELECT * FROM apoteker WHERE shift = 'Pagi';                                                -- Operator =
+SELECT * FROM kategori_obat WHERE golongan <> 'Keras';                                      -- Operator <>
+SELECT * FROM detail_transaksi WHERE jumlah > 2;                                            -- Operator >
+SELECT * FROM obat WHERE stok < 100;                                                        -- Operator <
+SELECT * FROM transaksi WHERE total_harga >= 15000;                                         -- Operator >=
+SELECT * FROM obat WHERE harga_satuan <= 5000;                                              -- Operator <=
+SELECT nama, alamat FROM pelanggan WHERE alamat LIKE '%Jakarta%';                           -- Kondisi LIKE
+SELECT * FROM transaksi WHERE tanggal_transaksi BETWEEN '2023-11-02 00:00:00' AND '2023-11-04 23:59:59'; -- Kondisi BETWEEN
+SELECT * FROM kategori_obat WHERE golongan IN ('Bebas', 'Bebas Terbatas');                  -- Kondisi IN
+SELECT * FROM pelanggan WHERE no_telepon IS NOT NULL;                                       -- Kondisi IS NOT NULL
+SELECT * FROM transaksi WHERE tanggal_transaksi >= '2023-11-01' AND NOT metode_pembayaran = 'QRIS'; -- Logika keamanan AND/NOT
+
+-- Menampilkan jumlah apoteker per shift (Query dengan grouping)
+SELECT shift, COUNT(*) AS jumlah_apoteker FROM apoteker GROUP BY shift;
+
+-- Menampilkan rekap pendapatan lebih dari 10000 (Query grouping dan having)
+SELECT metode_pembayaran, SUM(total_harga) AS rekap_pendapatan FROM transaksi GROUP BY metode_pembayaran HAVING rekap_pendapatan > 10000;
+
+-- Menampilkan fungsi statistik data obat (Query aggregate functions)
+SELECT COUNT(id_obat) AS total_jenis, MIN(harga_satuan) AS termurah, MAX(harga_satuan) AS termahal, AVG(stok) AS rerata_stok FROM obat;
+

@@ -205,3 +205,38 @@ SELECT metode_pembayaran, SUM(total_harga) AS rekap_pendapatan FROM transaksi GR
 -- Menampilkan fungsi statistik data obat (Query aggregate functions)
 SELECT COUNT(id_obat) AS total_jenis, MIN(harga_satuan) AS termurah, MAX(harga_satuan) AS termahal, AVG(stok) AS rerata_stok FROM obat;
 
+
+-- 8. Lakukan query dengan memanfaatkan perintah DQL SQL untuk 2 tabel yang berbeda-beda ,dengan memanfaatkan berbagai macam subquery dan Join
+
+-- Menampilkan relasi transaksi dan pelanggan (Inner Join)
+SELECT t.id_transaksi, p.nama AS nama_pelanggan, t.tanggal_transaksi, t.total_harga
+FROM transaksi t
+INNER JOIN pelanggan p ON t.id_pelanggan = p.id_pelanggan;
+
+-- Menampilkan relasi obat dan kategori (Left Join)
+SELECT o.nama_obat, o.harga_satuan, ko.nama_kategori
+FROM obat o
+LEFT JOIN kategori_obat ko ON o.id_kategori = ko.id_kategori;
+
+-- Menampilkan relasi transaksi dan nama obat (Right Join)
+SELECT dt.id_transaksi, dt.jumlah, dt.subtotal, o.nama_obat 
+FROM obat o
+RIGHT JOIN detail_transaksi dt ON o.id_obat = dt.id_obat;
+
+-- Menarik nama penanggung jawab transaksi (Subquery di SELECT)
+SELECT t.id_transaksi, t.tanggal_transaksi, t.total_harga,
+    (SELECT a.nama FROM apoteker a WHERE a.id_apoteker = t.id_apoteker) AS penanggung_jawab
+FROM transaksi t;
+
+-- Mencari pelanggan dengan total belanja tertinggi (Subquery di WHERE)
+SELECT nama, alamat 
+FROM pelanggan 
+WHERE id_pelanggan = (SELECT id_pelanggan FROM transaksi ORDER BY total_harga DESC LIMIT 1);
+
+-- Menampilkan obat yang sering dibeli (Subquery dengan IN)
+SELECT * FROM obat WHERE id_obat IN (SELECT id_obat FROM detail_transaksi WHERE jumlah >= 3);
+
+-- Menampilkan apoteker yang aktif melayani (Subquery dengan EXISTS)
+SELECT id_apoteker, nama, shift FROM apoteker a
+WHERE EXISTS (SELECT 1 FROM transaksi t WHERE t.id_apoteker = a.id_apoteker);
+
